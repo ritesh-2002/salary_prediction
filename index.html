@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Income Classifier</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    input, select, button { display: block; margin: 10px 0; padding: 8px; width: 300px; }
+  </style>
+</head>
+<body>
+  <h2>Employee Income Classifier</h2>
+  <form id="predictForm">
+    <label>Age:</label>
+    <input type="number" name="age" required>
+    <label>Workclass:</label>
+    <input type="text" name="workclass" required>
+    <label>Final Weight (fnlwgt):</label>
+    <input type="number" name="fnlwgt" required>
+    <label>Education:</label>
+    <input type="text" name="education" required>
+    <label>Educational-num:</label>
+    <input type="number" name="educational-num" required>
+    <label>Marital Status:</label>
+    <input type="text" name="marital-status" required>
+    <label>Occupation:</label>
+    <input type="text" name="occupation" required>
+    <label>Relationship:</label>
+    <input type="text" name="relationship" required>
+    <label>Race:</label>
+    <input type="text" name="race" required>
+    <label>Gender:</label>
+    <input type="text" name="gender" required>
+    <label>Capital Gain:</label>
+    <input type="number" name="capital-gain" required>
+    <label>Capital Loss:</label>
+    <input type="number" name="capital-loss" required>
+    <label>Hours per Week:</label>
+    <input type="number" name="hours-per-week" required>
+    <label>Native Country:</label>
+    <input type="text" name="native-country" required>
+    <button type="submit">Predict Income</button>
+  </form>
+
+  <h3 id="result"></h3>
+
+  <script>
+    const form = document.getElementById('predictForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch('/predict', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      document.getElementById('result').innerText = `Predicted Income: ${data.income}`;
+    });
+  </script>
+</body>
+</html>
